@@ -1,0 +1,89 @@
+{
+  "version": "1.0.0-alpha.0",
+  "license": "MIT",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/index.ts"
+      ],
+      "react": [
+        "src/react/index.ts"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.cjs",
+      "import": "./dist/esm/index.mjs"
+    },
+    "./react": {
+      "require": "./dist/cjs/react/index.cjs",
+      "import": "./dist/esm/react/index.mjs"
+    }
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "build": "node ./esbuild.js",
+    "dev": "node ./esbuild.js --watch",
+    "lint": "prettier --check src/",
+    "prepare": "yarn build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "test": "yarn jest"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  },
+  "name": "tyrann-io",
+  "author": "hanayashiki",
+  "size-limit": [
+    {
+      "path": "dist/index.mjs",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/index.cjs",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.10.2",
+    "@types/express": "^4.17.11",
+    "@types/jest": "^27.0.3",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "esbuild": "^0.14.5",
+    "esbuild-node-externals": "^1.4.1",
+    "express": "^4.17.1",
+    "husky": "^6.0.0",
+    "jest": "^27.4.5",
+    "morgan": "^1.10.0",
+    "prettier": "^2.4.1",
+    "size-limit": "^4.10.2",
+    "ts-jest": "^27.1.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.2.0",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "rxjs": "^7.4.0"
+  },
+  "resolutions": {
+    "**/typescript": "^4.2.4"
+  }
+}

@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`string can pipe 1`] = `
+Object {
+  "_tag": "left",
+  "left": Array [
+    Object {
+      "error": Object {
+        "message": "required",
+      },
+      "inputPath": Array [],
+      "resolverPath": Array [],
+    },
+  ],
+}
+`;
+
+exports[`string can refine 1`] = `
+Object {
+  "_tag": "left",
+  "left": Array [
+    Object {
+      "error": Object {
+        "message": "required",
+      },
+      "inputPath": Array [],
+      "resolverPath": Array [],
+    },
+  ],
+}
+`;

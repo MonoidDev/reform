@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`array can validate 1`] = `
+Object {
+  "_tag": "left",
+  "left": Array [
+    Object {
+      "error": Object {
+        "message": "Expect a number, got string. ",
+      },
+      "inputPath": Array [
+        2,
+      ],
+      "resolverPath": Array [],
+    },
+  ],
+}
+`;
+
+exports[`array can validate 2`] = `
+Object {
+  "_tag": "left",
+  "left": Array [
+    Object {
+      "error": Object {
+        "message": "Expect a string, got object. ",
+      },
+      "inputPath": Array [
+        "array",
+        0,
+      ],
+      "resolverPath": Array [
+        "array",
+      ],
+    },
+    Object {
+      "error": Object {
+        "message": "Expect a string, got number. ",
+      },
+      "inputPath": Array [
+        "array",
+        1,
+      ],
+      "resolverPath": Array [
+        "array",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`literal can validate 1`] = `
+Object {
+  "_tag": "left",
+  "left": Array [
+    Object {
+      "error": Object {
+        "message": "Expect A, got B. ",
+      },
+      "inputPath": Array [],
+      "resolverPath": Array [],
+    },
+  ],
+}
+`;
+
+exports[`struct can validate 1`] = `
+Object {
+  "_tag": "left",
+  "left": Array [
+    Object {
+      "error": Object {
+        "message": "Expect a number, got string. ",
+      },
+      "inputPath": Array [
+        "nested",
+        "age",
+      ],
+      "resolverPath": Array [
+        "nested",
+        "age",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`struct can validate 2`] = `
+Object {
+  "_tag": "left",
+  "left": Array [
+    Object {
+      "error": Object {
+        "message": "Expect a number, got string. ",
+      },
+      "inputPath": Array [
+        "nested",
+        "nested1",
+        "age",
+      ],
+      "resolverPath": Array [
+        "nested",
+        "nested1",
+        "age",
+      ],
+    },
+    Object {
+      "error": Object {
+        "message": "Expect a number, got string. ",
+      },
+      "inputPath": Array [
+        "nested",
+        "nested2",
+        "age",
+      ],
+      "resolverPath": Array [
+        "nested",
+        "nested2",
+        "age",
+      ],
+    },
+    Object {
+      "error": Object {
+        "message": "Expect a string, got number. ",
+      },
+      "inputPath": Array [
+        "nested",
+        "nested2",
+        "name",
+      ],
+      "resolverPath": Array [
+        "nested",
+        "nested2",
+        "name",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`struct can validate 3`] = `
+Object {
+  "_tag": "left",
+  "left": Array [
+    Object {
+      "error": Object {
+        "message": "Expect a number, got string. ",
+      },
+      "inputPath": Array [
+        "nested",
+        "nested1",
+        "age",
+      ],
+      "resolverPath": Array [
+        "nested",
+        "nested1",
+        "age",
+      ],
+    },
+    Object {
+      "error": Object {
+        "message": "Expect an object, got undefined",
+      },
+      "inputPath": Array [
+        "nested",
+        "nested2",
+      ],
+      "resolverPath": Array [
+        "nested",
+        "nested2",
+      ],
+    },
+  ],
+}
+`;

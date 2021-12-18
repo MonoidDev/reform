@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`union can validate 1`] = `
+Array [
+  Object {
+    "error": Object {
+      "message": "Expect A, got . ",
+    },
+    "inputPath": Array [],
+    "resolverPath": Array [
+      0,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect B, got . ",
+    },
+    "inputPath": Array [],
+    "resolverPath": Array [
+      1,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect C, got . ",
+    },
+    "inputPath": Array [],
+    "resolverPath": Array [
+      2,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect D, got . ",
+    },
+    "inputPath": Array [],
+    "resolverPath": Array [
+      3,
+    ],
+  },
+]
+`;
+
+exports[`union can validate 2`] = `
+Array [
+  Object {
+    "error": Object {
+      "message": "Expect A, got [object Object]. ",
+    },
+    "inputPath": Array [],
+    "resolverPath": Array [
+      0,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect B, got [object Object]. ",
+    },
+    "inputPath": Array [],
+    "resolverPath": Array [
+      1,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect C, got [object Object]. ",
+    },
+    "inputPath": Array [],
+    "resolverPath": Array [
+      2,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect D, got [object Object]. ",
+    },
+    "inputPath": Array [],
+    "resolverPath": Array [
+      3,
+    ],
+  },
+]
+`;
+
+exports[`union can validate 3`] = `
+Array [
+  Object {
+    "error": Object {
+      "message": "Expect M, got . ",
+    },
+    "inputPath": Array [
+      "gender",
+    ],
+    "resolverPath": Array [
+      "gender",
+      0,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect F, got . ",
+    },
+    "inputPath": Array [
+      "gender",
+    ],
+    "resolverPath": Array [
+      "gender",
+      1,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect Other, got . ",
+    },
+    "inputPath": Array [
+      "gender",
+    ],
+    "resolverPath": Array [
+      "gender",
+      2,
+    ],
+  },
+  Object {
+    "error": Object {
+      "message": "Expect a string, got number. ",
+    },
+    "inputPath": Array [
+      "name",
+    ],
+    "resolverPath": Array [
+      "name",
+    ],
+  },
+]
+`;
