@@ -2,13 +2,12 @@ import React from 'react';
 import { useInput } from './observingHooks';
 import { BaseFormControlProps } from './utils';
 
-export type TextInputProps = React.HTMLProps<HTMLInputElement> & BaseFormControlProps<string>;
+export type CheckboxProps = React.HTMLProps<HTMLInputElement> & BaseFormControlProps<boolean>;
 
-export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
+export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   const {
     control,
     onChange,
-    onBlur,
     ...rest
   } = props;
 
@@ -17,17 +16,15 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>((pro
   return (
     <input
       ref={ref}
+      type="checkbox"
       onChange={(e) => {
         onChange?.(e);
-        control.input.next(e.target.value);
-      }}
-      onBlur={(e) => {
-        onBlur?.(e);
         if (!control.touched.getValue()) {
           control.touched.next(true);
-        };
+        }
+        control.input.next(!input);
       }}
-      value={input}
+      checked={input}
       {...rest}
     />
   );

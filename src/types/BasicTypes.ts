@@ -19,10 +19,10 @@ export function any(): TAny {
   };
 }
 
-export interface TString
-  extends Resolver<unknown, string, ErrorMessage, 'string'> {}
+export interface TString<I = unknown>
+  extends Resolver<I, string, ErrorMessage, 'string'> {}
 
-export function string(): TString {
+export function string<I = unknown>(): TString<I> {
   return {
     ...makeResolver<unknown, string, ErrorMessage, 'string'>(
       'string',

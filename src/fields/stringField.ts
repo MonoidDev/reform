@@ -3,7 +3,7 @@ import { Either, makeLeft, makeRight } from '../types/Either';
 import { ErrorMessage } from '../types/ErrorMessage';
 
 export const stringField = () => {
-  const stringType = string();
+  const stringType = string<string>();
 
   return {
     ...stringType,

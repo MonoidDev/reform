@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FormControl } from 'tyrann-io';
+import { FormControl } from '@monoid-dev/reform';
 
 export interface SimpleTextInputProps {
   formControl: FormControl<string, string>;

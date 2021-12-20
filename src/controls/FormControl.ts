@@ -2,20 +2,7 @@ import { BehaviorSubject, debounceTime } from 'rxjs';
 import { isLeft, makeLeft } from '../types/Either';
 import { ErrorMessage } from '../types/ErrorMessage';
 import { Resolver, Result } from '../types/Resolver';
-import { FormResult } from './types';
-
-export type ValidationPolicy = 
-  | {
-    type: 'sync',
-  }
-  | {
-    type: 'debounce',
-    timeout?: number,
-  };
-
-export interface FormControlOptions {
-  validationPolicy?: ValidationPolicy;
-}
+import { FormControlOptions, FormResult, Unsubscribe } from './types';
 
 export interface FormControlInitialMeta<O> {
   initialResult?: Result<O>;
@@ -27,6 +14,8 @@ export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name exten
   input: BehaviorSubject<I>;
   result: BehaviorSubject<FormResult<O> | undefined>;
   touched: BehaviorSubject<boolean>;
+
+  unsubcribe: Unsubscribe;
 
   __input!: I;
   __output!: O;
@@ -41,7 +30,7 @@ export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name exten
     this.result = new BehaviorSubject<FormResult<O> | undefined>(this.resolveResult());
     this.touched = new BehaviorSubject(initialMeta?.initialTouched ?? false);
 
-    this.startValidation();
+    this.unsubcribe = this.startValidation();
   }
 
   resolveResult(): FormResult<O> {
@@ -59,16 +48,21 @@ export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name exten
   startValidation() {
     const validationPolicy = this.options.validationPolicy ?? { type: 'sync' };
     switch (validationPolicy.type) {
-      case 'sync':
-        this.input.forEach(() => {
+      case 'sync': {
+        const subscription = this.input.subscribe(() => {
           this.validate();
         });
-        break;
-      case 'debounce':
-        this.input.pipe(
+        return () => subscription.unsubscribe();
+      }
+      case 'debounce': {
+        const subscription = this.input.pipe(
           debounceTime(validationPolicy.timeout ?? 500),
-        )
-        break;
+        ).subscribe(() => {
+          this.validate();
+        })
+        return () => subscription.unsubscribe();
+      }
+
     }
 
   }
@@ -88,4 +82,13 @@ export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name exten
   getResult(): FormResult<O> | undefined {
     return this.result.getValue();
   }
+
+  getTouched(): boolean {
+    return this.touched.getValue();
+  }
+
+  touchAll() {
+    this.touched.next(true);
+  }
+
 }

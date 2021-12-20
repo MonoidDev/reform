@@ -2,7 +2,7 @@ import { any } from '../types/BasicTypes';
 import { Either, makeLeft, makeRight } from '../types/Either';
 import { ErrorMessage } from '../types/ErrorMessage';
 
-export const booleanField = (options: BooleanFieldOptions) => {
+export const booleanField = (options: BooleanFieldOptions = {}) => {
   const {
     message,
     truthy = 'true',
@@ -12,6 +12,7 @@ export const booleanField = (options: BooleanFieldOptions) => {
   const booleanType = any()
     .refine(
       (input) => {
+        if (typeof input === 'boolean') return makeRight(input);
         if (input === truthy) return makeRight(true);
         if (input === '') return required ? makeLeft({ message: message ?? '' }) : makeRight(undefined);
         return makeRight(false);

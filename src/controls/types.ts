@@ -8,3 +8,16 @@ export type AnyFormControl = FormControl<any, any, any, any> | StructFormControl
 export type FormResult<O> = Either<ErrorMessage | undefined, O>;
 
 export type Unsubscribe = () => void;
+
+export type ValidationPolicy = 
+  | {
+    type: 'sync',
+  }
+  | {
+    type: 'debounce',
+    timeout?: number,
+  };
+
+export interface FormControlOptions {
+  validationPolicy?: ValidationPolicy;
+}
