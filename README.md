@@ -1,4 +1,8 @@
 # Welcome to tyrann-io 👋
+![Version](https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000)
+![Prerequisite](https://img.shields.io/badge/node-%3E%3D10-blue.svg)
+[![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/wopal-dev/tyrann-io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMonoidDev%2Freform.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FMonoidDev%2Freform?ref=badge_shield)
 
 > Yet another easy solution to keep your REST calls and data types in the same place (deprecating tyrann) 
@@ -335,3 +339,7 @@ Give a ⭐️ if this project helped you!
 
 ***
 _This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FMonoidDev%2Freform.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FMonoidDev%2Freform?ref=badge_large)
