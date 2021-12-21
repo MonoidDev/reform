@@ -110,7 +110,6 @@ export class ArrayFormControl<F extends AnyFormControl> {
   touchAll() {
     this.touched.next(true);
     for (const control of this.getControls()) {
-      console.log('Array touched');
       control.touchAll();
     }
   }

@@ -27,8 +27,7 @@ export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name exten
     public options: FormControlOptions = {},
   ) {
     this.input = new BehaviorSubject(initialInput);
-    this.result = new BehaviorSubject<FormResult<O> | undefined>(this.resolveResult());
-    console.log(this.input.getValue(), this.result.getValue());
+    this.result = new BehaviorSubject<FormResult<O> | undefined>(this.resolveResult()); 
     this.touched = new BehaviorSubject(initialMeta?.initialTouched ?? false);
 
     this.unsubcribe = this.startValidation();
