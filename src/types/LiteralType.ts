@@ -27,6 +27,6 @@ export function literal<T extends LiteralValue>(value: T): TLiteral<T> {
         });
       }
     }),
-    value,
+    value
   };
 }
