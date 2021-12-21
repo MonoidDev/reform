@@ -1,13 +1,6 @@
-import { isLeft, makeLeft, makeRight } from './Either';
+import { makeLeft, makeRight } from './Either';
 import { ErrorMessage } from './ErrorMessage';
-import { AnyResolver, OutputOf } from './infer';
-import {
-  ErrorContext,
-  makeErrorContext,
-  makeResolver,
-  Resolver,
-} from './Resolver';
-import { isObject } from './utils';
+import { makeResolver, Resolver } from './Resolver';
 
 export type LiteralValue = string | number | boolean;
 
@@ -27,6 +20,6 @@ export function literal<T extends LiteralValue>(value: T): TLiteral<T> {
         });
       }
     }),
-    value
+    value,
   };
 }

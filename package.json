@@ -45,11 +45,6 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn lint"
-    }
-  },
   "name": "tyrann-io",
   "author": "hanayashiki",
   "size-limit": [
