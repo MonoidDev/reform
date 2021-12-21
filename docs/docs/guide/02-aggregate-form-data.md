@@ -62,18 +62,18 @@ To wrap the growing count of FormControl, we can wrap with a newly introduced `S
 ```jsx
 import { useState } from 'react';
 
-import { ErrorMessage, TextInput, useTextInput, useStruct } from '@monoid-dev/reform/react'
+import { ErrorMessage, TextInput, textInput, useStruct } from '@monoid-dev/reform/react'
 import { stringField } from '@monoid-dev/reform';
 
 export default function SignupExample() {
   const [result, setResult] = useState('');
 
   const signup = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .required('This field cannot be empty. ')
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'This password is too short. ')
     ),
@@ -106,11 +106,11 @@ function SignupExample() {
   const [result, setResult] = useState('');
 
   const signup = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .required('This field cannot be empty. ')
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'This password is too short. ')
     ),
@@ -164,15 +164,15 @@ export default function SignupExample() {
   const [result, setResult] = useState('');
 
   const signup = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .required('This field cannot be empty. ')
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'This password is too short. ')
     ),
-    repeatPassword: useTextInput(
+    repeatPassword: textInput(
       stringField()
     ),
   },
@@ -216,15 +216,15 @@ function SignupExample() {
   const [result, setResult] = useState('');
 
   const signup = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .required('This field cannot be empty. ')
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'This password is too short. ')
     ),
-    repeatPassword: useTextInput(
+    repeatPassword: textInput(
       stringField()
     ),
   },
@@ -282,22 +282,22 @@ However, we do provide a utility function `touchAll` for `StructFormControl`, th
 ```jsx
 import { useState } from 'react';
 
-import { ErrorMessage, TextInput, useTextInput, useStruct } from '@monoid-dev/reform/react'
+import { ErrorMessage, TextInput, textInput, useStruct } from '@monoid-dev/reform/react'
 import { makeLeft, makeRight, stringField } from '@monoid-dev/reform';
 
 export default function SignupExample() {
   const [result, setResult] = useState('');
 
   const signup = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .required('This field cannot be empty. ')
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'This password is too short. ')
     ),
-    repeatPassword: useTextInput(
+    repeatPassword: textInput(
       stringField()
     ),
   },
@@ -344,15 +344,15 @@ function SignupExample() {
   const [result, setResult] = useState('');
 
   const signup = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .required('This field cannot be empty. ')
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'This password is too short. ')
     ),
-    repeatPassword: useTextInput(
+    repeatPassword: textInput(
       stringField()
     ),
   },
@@ -393,4 +393,4 @@ function SignupExample() {
 </p>
 </details>
 
-Note that the extra line of `sign.touchAll` lets you see all errors when you click with the form blank.
+Note that the extra line of `sign.touchAll()` lets you see all errors when you click with the form blank.

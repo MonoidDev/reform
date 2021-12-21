@@ -1,17 +1,17 @@
 import { useState } from 'react';
 
-import { ErrorMessage, TextInput, useTextInput, useStruct } from '@monoid-dev/reform/react'
+import { ErrorMessage, TextInput, textInput, useStruct } from '@monoid-dev/reform/react'
 import { stringField } from '@monoid-dev/reform';
 
 export default function SignupExample() {
   const [result, setResult] = useState('');
 
   const signup = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .required('This field cannot be empty. ')
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'This password is too short. ')
     ),

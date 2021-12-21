@@ -19,7 +19,9 @@ export const TextInput = React.forwardRef<HTMLInputElement, TextInputProps>((pro
       ref={ref}
       onChange={(e) => {
         onChange?.(e);
-        control.input.next(e.target.value);
+        if (control.input.getValue() !== e.target.value) {
+          control.input.next(e.target.value);
+        }
       }}
       onBlur={(e) => {
         onBlur?.(e);

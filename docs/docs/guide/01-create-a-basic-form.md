@@ -39,12 +39,12 @@ Now we are required to build a signup form, the old-fashioned username-password 
 Let's first satisfy the first requirement.
 
 ```jsx
-import { TextInput, useTextInput } from '@monoid-dev/reform/react'
+import { TextInput, textInput } from '@monoid-dev/reform/react'
 import { stringField } from '@monoid-dev/reform';
 
 export default function SignupExample() {
-  const username = useTextInput(stringField());
-  const password = useTextInput(stringField());
+  const username = textInput(stringField());
+  const password = textInput(stringField());
 
   return (
     <div>

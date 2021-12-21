@@ -18,8 +18,9 @@ export class StructFormControl<
   M extends FormControlMap,
   O = StructOutputOf<M>,
   R extends (i: StructOutputOf<M>) => FormResult<O> = ((i: StructOutputOf<M>) => FormResult<O>),
+  T extends string = 'StructFormControl',
 > {
-  tag: 'StructFormControl' = 'StructFormControl';
+  tag: T;
   __input!: StructInputOf<M>;
   __output!: O;
 
@@ -32,8 +33,12 @@ export class StructFormControl<
 
   constructor(
     public controls: Readonly<M>,
-    public refine: R = identityRefine,
+    public options: {
+      refine?: R | undefined,
+      tag?: T | undefined,
+    } = {},
   ) {
+    this.tag = options.tag as T ?? 'StructFormControl';
     this.input = new BehaviorSubject(this.getInput());
     this.output = new BehaviorSubject<O | undefined>(
       this.getOutput(),
@@ -75,12 +80,16 @@ export class StructFormControl<
       }
       object[key] = control.getOutput();
     }
-    console.log(this.refine(object))
+    // console.log(this.refine(object))
     return this.refine(object);
   }
 
   getTouched(): boolean {
     return Object.values(this.controls).some((c: AnyFormControl) => c.getTouched());
+  }
+
+  refine(i: StructOutputOf<M>): FormResult<O> {
+    return (this.options.refine ?? identityRefine)(i);
   }
 
   startValidation() {
@@ -115,6 +124,7 @@ export class StructFormControl<
     this.touched.next(true);
     for (const [, control] of Object.entries(this.controls)) {
       control.touchAll();
+      console.log('StructFormControl touch', control);
     }
   }
 }

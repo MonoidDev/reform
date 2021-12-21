@@ -4,27 +4,48 @@ import {
   FormControl,
 } from '../controls/FormControl';
 import {
+  AnyFormControl,
   FormControlOptions, FormResult,
 } from '../controls/types';
 import { ErrorMessage } from '../types/ErrorMessage';
 import { useEffect, useMemo, useRef } from 'react';
 import { FormControlMap, identityRefine, StructFormControl, StructOutputOf } from '../controls/StructFormControl';
+import { ArrayFormControl } from '..';
+
+export function useDestoryControl<F extends AnyFormControl>(f: F) {
+  useEffect(() => () => {
+    f.unsubcribe();
+  }, [f]);
+}
+
+export function useArray<
+  F extends AnyFormControl,
+>(
+  initialControls: readonly F[],
+  deps: unknown[] = [],
+){
+  const control = useMemo(() => new ArrayFormControl(initialControls), deps);
+
+  useDestoryControl(control);
+  return control;
+};
 
 export function useStruct<
   M extends FormControlMap,
   O = StructOutputOf<M>,
   R extends (i: StructOutputOf<M>) => FormResult<O> = ((i: StructOutputOf<M>) => FormResult<O>),
+  T extends string = 'StructFormControl',
 >(
   controls: Readonly<M>,
-  refine: R = identityRefine,
+  options: {
+    refine?: R,
+    tag?: T,
+  } = {},
   deps: unknown[] = [],
 ) {
+  const control = useMemo(() => new StructFormControl<M, O, R, T>(controls, options), deps);
 
-  const control = useMemo(() => {
-    const form = new StructFormControl<M, O>(controls, refine);
-    return form;
-  }, deps);
-
+  useDestoryControl(control);
   return control;
 }
 
@@ -54,10 +75,7 @@ export function useFormControl<
     return form;
   }, deps);
 
-  useEffect(() => () => {
-    control.unsubcribe();
-  }, []);
-
+  useDestoryControl(control);
   return control;
 }
 

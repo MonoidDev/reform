@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { ArrayFormControl } from "..";
 import { AnyFormControl } from "../controls/types";
 import { useForceUpdate } from "./utils";
 
@@ -33,3 +34,17 @@ export function useTouched<F extends AnyFormControl>(control: F): ReturnType<F['
 
   return control.getTouched() as any;
 }
+
+export function useControls<F extends AnyFormControl>(array: ArrayFormControl<F>) {
+  const forceUpdate = useForceUpdate();
+
+  useEffect(() => {
+    const sub = array.controls.subscribe(forceUpdate);
+
+    return () => {
+      sub.unsubscribe();
+    }
+  }, [array]);
+
+  return array.getControls();
+};

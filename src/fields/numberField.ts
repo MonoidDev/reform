@@ -8,7 +8,7 @@ export interface NumberFieldOptions {
 }
 
 export const numberField = (
-  options: NumberFieldOptions
+  options: NumberFieldOptions = { message: 'Invalid number' }
 ) => {
   const { message } = options;
 
@@ -30,7 +30,12 @@ export const numberField = (
   return makeNumberField(numberType);
 };
 
-export const requiredNumberField = (options: RequiredNumberFieldOptions) => {
+export const requiredNumberField = (
+  options: RequiredNumberFieldOptions = {
+    message: 'Invalid number',
+    requiredMessage: 'This field is required'
+  },
+) => {
   const { message, requiredMessage } = options;
 
   const numberType = any().refine((input) => {

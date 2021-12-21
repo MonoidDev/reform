@@ -17,6 +17,8 @@ export const ErrorMessage: React.VFC<ErrorMessageProps> = (props) => {
 
   const shouldDisplay = whenTouched ? touched : true;
 
+  console.log('ErrorMessage', touched, control, result);
+
   return (
     <>
       {result?._tag === 'left' && shouldDisplay ? (result?.left?.message ?? '') : null}

@@ -1,26 +1,26 @@
 import { useState } from 'react';
 
-import { ErrorMessage, TextInput, useTextInput, useStruct } from '@monoid-dev/reform/react'
-import { makeLeft, makeRight, stringField } from '@monoid-dev/reform';
+import { ErrorMessage, TextInput, useStruct } from '@monoid-dev/reform/react'
+import { makeLeft, makeRight, stringField, textInput } from '@monoid-dev/reform';
 
 export default function SignupExample() {
   const [result, setResult] = useState('');
 
   const signup = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .required('This field cannot be empty. ')
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'This password is too short. ')
     ),
-    repeatPassword: useTextInput(
+    repeatPassword: textInput(
       stringField()
     ),
-  },
-    (o) => o.password === o.repeatPassword ? makeRight(o) : makeLeft({ message: 'Passwords don\'t match. ' })
-  );
+  }, {
+    refine: (o) => o.password === o.repeatPassword ? makeRight(o) : makeLeft({ message: 'Passwords don\'t match. ' })
+  });
 
   return (
     <div>

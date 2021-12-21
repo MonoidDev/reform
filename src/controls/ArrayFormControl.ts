@@ -14,70 +14,74 @@ export class ArrayFormControl<F extends AnyFormControl> {
   input: BehaviorSubject<ArrayInputOf<F>>;
   output: BehaviorSubject<ArrayOutputOf<F> | undefined>;
   result: BehaviorSubject<FormResult<ArrayOutputOf<F>> | undefined>;
+  touched: BehaviorSubject<boolean>;
 
-  controls: readonly F[];
+  controls: BehaviorSubject<readonly F[]>;
 
   unsubcribe: Unsubscribe;
 
   constructor(
     public initialControls: readonly F[],
   ) {
-    this.controls = [...initialControls];
+    this.controls = new BehaviorSubject<readonly F[]>([...initialControls]);
     this.input = new BehaviorSubject(this.getInput());
     this.output = new BehaviorSubject(this.getOutput());
     this.result = new BehaviorSubject<FormResult<ArrayOutputOf<F>> | undefined>(this.getResult());
+    this.touched = new BehaviorSubject(this.getTouched());
 
     this.unsubcribe = this.startValidation();
   }
 
   getInput(): ArrayInputOf<F> {
-    return this.controls.map((c) => c.getInput());
+    return this.getControls().map((c) => c.getInput());
   }
 
   getOutput(): ArrayOutputOf<F> | undefined {
-    if (this.controls.find(c => c.getOutput() === undefined)) {
+    if (this.getControls().find(c => c.getOutput() === undefined)) {
       return undefined;
     }
-    return this.controls.map((c) => c.getOutput());
+    return this.getControls().map((c) => c.getOutput());
   }
 
   getResult(): FormResult<ArrayOutputOf<F>> {
-    if (this.controls.find(
+    if (this.getControls().find(
       c => c.getResult() === undefined || isRight(c.getResult()!))
     ) {
-      return makeLeft({ message: 'INNER_FORM_INVALID' });
+      return makeLeft({ message: '' });
     }
-    return makeRight(this.controls.map((c) => c.getOutput()));
+    return makeRight(this.getControls().map((c) => c.getOutput()));
+  }
+
+  getTouched(): boolean {
+    return Object.values(this.getControls()).some((c: AnyFormControl) => c.getTouched());
+  }
+
+  getControls() {
+    return this.controls.getValue();
   }
 
   startValidation() {
-    const inputTask = combineLatest(this.controls.map((c) => c.input))
-      .subscribe({
-        next: () => {
-          this.input.next(this.getInput());
-        },
+    const inputTask = combineLatest(this.getControls().map((c) => c.input))
+      .subscribe(() => {
+        this.input.next(this.getInput());
       });
 
-    const resultTask = combineLatest(this.controls.map((c) => c.result))
-      .subscribe({
-        next: () => {
-          this.result.next(this.getResult());
-          this.output.next(this.getOutput());
-          console.log('output', this.getOutput());
-        },
+    const resultTask = combineLatest(this.getControls().map((c) => c.result))
+      .subscribe(() => {
+        this.result.next(this.getResult());
+        this.output.next(this.getOutput());
       });
 
     return () => {
-      console.log('unsubbed');
       inputTask.unsubscribe();
       resultTask.unsubscribe();
     };
   }
 
   splice(index: number, deleteCount: number, ...items: F[]) {
-    const controls = [...this.controls];
+    const controls = [...this.getControls()];
     controls.splice(index, deleteCount, ...items);
-    this.controls = controls;
+    this.controls.next(controls);
     this.unsubcribe?.();
     this.unsubcribe = this.startValidation();
     return this;
@@ -89,7 +93,7 @@ export class ArrayFormControl<F extends AnyFormControl> {
   }
 
   push(...items: F[]) {
-    this.splice(this.controls.length, 0, ...items);
+    this.splice(this.getControls().length, 0, ...items);
     return this;
   }
 
@@ -99,8 +103,16 @@ export class ArrayFormControl<F extends AnyFormControl> {
   }
 
   pop() {
-    this.splice(this.controls.length - 1, 1);
+    this.splice(this.getControls().length - 1, 1);
     return this;
+  }
+
+  touchAll() {
+    this.touched.next(true);
+    for (const control of this.getControls()) {
+      console.log('Array touched');
+      control.touchAll();
+    }
   }
 
 }

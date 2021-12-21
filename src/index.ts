@@ -8,27 +8,12 @@ export * from './types/Resolver';
 export * from './types/StructType';
 export * from './types/utils';
 
-export {
-  FormControl,
-} from './controls/FormControl';
+export * from './controls/FormControl';
+export * from './controls/StructFormControl';
+export * from './controls/ArrayFormControl';
 
-export {
-  StructFormControl,
-} from './controls/StructFormControl';
+export * from './react/factories';
 
-export {
-  ArrayFormControl,
-} from './controls/ArrayFormControl';
-
-
-export {
-  stringField,
-} from './fields/stringField';
-
-export {
-  numberField,
-} from './fields/numberField';
- 
-export {
-  booleanField,
-} from './fields/booleanField';
+export * from './fields/stringField';
+export * from './fields/numberField';
+export * from './fields/booleanField';

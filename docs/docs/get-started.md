@@ -67,12 +67,12 @@ yarn add @monoid-dev/reform
 function SignupExample() {
   const rendered = useRef(0);
   const struct = useStruct({
-    username: useTextInput(
+    username: textInput(
       stringField()
         .min(5, 'At least 5 characters'),
       '',
     ),
-    password: useTextInput(
+    password: textInput(
       stringField()
         .min(6, 'Should be at least 6 letters')
         .refine(
