@@ -8,15 +8,12 @@ export interface NumberFieldOptions {
 }
 
 export const numberField = (
-  options: NumberFieldOptions = { message: 'Invalid number' }
+  options: NumberFieldOptions = { message: 'Invalid number' },
 ) => {
   const { message } = options;
 
   const numberType = any().refine((input) => {
-    if (
-      typeof input === 'string' &&
-      input.trim().length === 0
-    ) {
+    if (typeof input === 'string' && input.trim().length === 0) {
       return makeRight(undefined);
     }
 
@@ -33,7 +30,7 @@ export const numberField = (
 export const requiredNumberField = (
   options: RequiredNumberFieldOptions = {
     message: 'Invalid number',
-    requiredMessage: 'This field is required'
+    requiredMessage: 'This field is required',
   },
 ) => {
   const { message, requiredMessage } = options;
@@ -51,17 +48,19 @@ export const requiredNumberField = (
   });
 
   return makeNumberField(numberType);
-}
+};
 
 export interface RequiredNumberFieldOptions extends NumberFieldOptions {
   requiredMessage: string;
 }
 
-const makeNumberField = <TNumber extends number | undefined>(numberType: Resolver<any, TNumber, ErrorMessage, string>) => {
+const makeNumberField = <TNumber extends number | undefined>(
+  numberType: Resolver<any, TNumber, ErrorMessage, string>,
+) => {
   return {
     ...numberType,
     refine<O2, E2 extends ErrorMessage = ErrorMessage>(
-      validate: (input: TNumber) => Either<E2, O2>
+      validate: (input: TNumber) => Either<E2, O2>,
     ) {
       return {
         ...this,
@@ -78,34 +77,34 @@ const makeNumberField = <TNumber extends number | undefined>(numberType: Resolve
       return this.refine((input) =>
         input === undefined || input > n
           ? makeLeft({ message })
-          : makeRight(input)
+          : makeRight(input),
       );
     },
     min(n: number, message: string) {
       return this.refine((input) =>
         input === undefined || input < n
           ? makeLeft({ message })
-          : makeRight(input)
+          : makeRight(input),
       );
     },
     positive(message: string) {
       return this.refine((input) =>
         input === undefined || input <= 0
           ? makeLeft({ message })
-          : makeRight(input)
+          : makeRight(input),
       );
     },
     negative(message: string) {
       return this.refine((input) =>
         input === undefined || input >= 0
           ? makeLeft({ message })
-          : makeRight(input)
+          : makeRight(input),
       );
     },
     integer(message: string) {
       return this.refine((input) =>
-        !Number.isSafeInteger(input) ? makeLeft({ message }) : makeRight(input)
+        !Number.isSafeInteger(input) ? makeLeft({ message }) : makeRight(input),
       );
     },
   };
-}
+};

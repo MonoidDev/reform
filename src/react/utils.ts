@@ -5,12 +5,12 @@ import { AnyFormControl } from '../controls/types';
 export const useForceUpdate = () => {
   const [, s] = useState({});
   return () => s({});
-}
+};
 
 export type BaseFormControlProps<I = any> = {
-  control: FormControl<I, any, any, any>,
-}
+  control: FormControl<I, any, any, any>;
+};
 
 export type BaseAnyFormControlProps = {
-  control: AnyFormControl,
-}
+  control: AnyFormControl;
+};

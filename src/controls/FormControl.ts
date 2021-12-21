@@ -9,7 +9,12 @@ export interface FormControlInitialMeta<O> {
   initialTouched?: boolean;
 }
 
-export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name extends string = string> {
+export class FormControl<
+  I,
+  O,
+  E extends ErrorMessage = ErrorMessage,
+  Name extends string = string,
+> {
   tag: 'FormControl' = 'FormControl';
   input: BehaviorSubject<I>;
   result: BehaviorSubject<FormResult<O> | undefined>;
@@ -27,7 +32,9 @@ export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name exten
     public options: FormControlOptions = {},
   ) {
     this.input = new BehaviorSubject(initialInput);
-    this.result = new BehaviorSubject<FormResult<O> | undefined>(this.resolveResult()); 
+    this.result = new BehaviorSubject<FormResult<O> | undefined>(
+      this.resolveResult(),
+    );
     this.touched = new BehaviorSubject(initialMeta?.initialTouched ?? false);
 
     this.unsubcribe = this.startValidation();
@@ -55,16 +62,14 @@ export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name exten
         return () => subscription.unsubscribe();
       }
       case 'debounce': {
-        const subscription = this.input.pipe(
-          debounceTime(validationPolicy.timeout ?? 500),
-        ).subscribe(() => {
-          this.validate();
-        })
+        const subscription = this.input
+          .pipe(debounceTime(validationPolicy.timeout ?? 500))
+          .subscribe(() => {
+            this.validate();
+          });
         return () => subscription.unsubscribe();
       }
-
     }
-
   }
 
   getInput(): I {
@@ -90,5 +95,4 @@ export class FormControl<I, O, E extends ErrorMessage = ErrorMessage, Name exten
   touchAll() {
     this.touched.next(true);
   }
-
 }

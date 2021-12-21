@@ -14,7 +14,7 @@ export interface TAny extends Resolver<any, any, ErrorMessage, 'any'> {}
 export function any(): TAny {
   return {
     ...makeResolver<any, any, ErrorMessage, 'any'>('any', (input) =>
-      makeRight(input)
+      makeRight(input),
     ),
   };
 }
@@ -34,7 +34,7 @@ export function string<I = unknown>(): TString<I> {
             message: `Expect a string, got ${typeof input}. `,
           });
         }
-      }
+      },
     ),
   };
 }
@@ -54,7 +54,7 @@ export function number(): TNumber {
             message: `Expect a number, got ${typeof input}. `,
           });
         }
-      }
+      },
     ),
   };
 }
@@ -74,7 +74,7 @@ export function boolean(): TBoolean {
             message: `Expect a boolean, got ${typeof input}. `,
           });
         }
-      }
+      },
     ),
   };
 }
@@ -110,7 +110,7 @@ export function undefinedType(): TUndefined {
             message: `Expect an undefined, got ${typeof input}. `,
           });
         }
-      }
+      },
     ),
   };
 }
@@ -148,7 +148,7 @@ export function array<T extends AnyResolver>(t: T): TArray<T> {
 
       let value: any = [];
 
-      const newErrorContexts: ErrorContext[] = []; 
+      const newErrorContexts: ErrorContext[] = [];
       for (let i = 0; i < input.length; i++) {
         const nextContext: ErrorContext = {
           inputPath: [...contexts[contexts.length - 1].inputPath, i],
@@ -167,13 +167,10 @@ export function array<T extends AnyResolver>(t: T): TArray<T> {
 
       if (newErrorContexts.length) {
         contexts.pop(); // Remove last context because there're no errors
-        return makeLeft([
-          ...contexts,
-          ...newErrorContexts,
-        ]);
+        return makeLeft([...contexts, ...newErrorContexts]);
       }
 
       return makeRight(value);
-    }
+    },
   };
 }

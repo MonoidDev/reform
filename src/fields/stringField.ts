@@ -8,7 +8,7 @@ export const stringField = () => {
   return {
     ...stringType,
     refine<O2, E2 extends ErrorMessage = ErrorMessage>(
-      validate: (input: string) => Either<E2, O2>
+      validate: (input: string) => Either<E2, O2>,
     ) {
       return {
         ...this,
@@ -26,14 +26,18 @@ export const stringField = () => {
     },
     matches(regexp: RegExp, message: string) {
       return this.refine((input) =>
-        regexp.test(input) ? makeRight(input) : makeLeft({ message })
+        regexp.test(input) ? makeRight(input) : makeLeft({ message }),
       );
     },
     max(n: number, message: string) {
-      return this.refine((input) => input.length > n ? makeLeft({ message }) : makeRight(input));
+      return this.refine((input) =>
+        input.length > n ? makeLeft({ message }) : makeRight(input),
+      );
     },
     min(n: number, message: string) {
-      return this.refine((input) => input.length < n ? makeLeft({ message }) : makeRight(input));
+      return this.refine((input) =>
+        input.length < n ? makeLeft({ message }) : makeRight(input),
+      );
     },
     required(message: string) {
       return this.trim().min(1, message);

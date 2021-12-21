@@ -9,10 +9,10 @@ export interface Resolver<I, O, E extends ErrorMessage, Name extends string> {
   name: Name;
   resolve: (input: I, contexts?: ErrorContext[]) => Result<O>;
   pipe: <O2, E2 extends ErrorMessage, Name2 extends string>(
-    resolver: Resolver<O, O2, E2, Name2>
+    resolver: Resolver<O, O2, E2, Name2>,
   ) => Resolver<I, O2, E | E2, Name2>;
   refine: <O2, E2 extends ErrorMessage = ErrorMessage>(
-    validate: (input: O) => Either<E2, O2>
+    validate: (input: O) => Either<E2, O2>,
   ) => Resolver<I, O2, E | E2, Name>;
   map: <O2>(mapper: (input: O) => O2) => Resolver<I, O2, E, Name>;
 }
@@ -39,10 +39,10 @@ export const makeResolver = <
   I,
   O,
   E extends ErrorMessage = ErrorMessage,
-  Name extends string = string
+  Name extends string = string,
 >(
   name: Name,
-  validate: (input: I) => Either<E, O> = makeLeft as any
+  validate: (input: I) => Either<E, O> = makeLeft as any,
 ): Resolver<I, O, E, Name> => {
   return {
     name,
@@ -56,7 +56,7 @@ export const makeResolver = <
       }
     },
     pipe<O2, E2 extends ErrorMessage, Name2 extends string>(
-      next: Resolver<O, O2, E2, Name2>
+      next: Resolver<O, O2, E2, Name2>,
     ) {
       const original = this;
 
@@ -73,12 +73,12 @@ export const makeResolver = <
       };
     },
     refine<O2, E2 extends ErrorMessage = ErrorMessage>(
-      validate: (input: O) => Either<E2, O2>
+      validate: (input: O) => Either<E2, O2>,
     ) {
       return this.pipe(makeResolver<O, O2, E | E2, Name>(this.name, validate));
     },
     map<O2>(mapper: (input: O) => O2) {
       return this.refine((input) => makeRight(mapper(input)));
-    }
+    },
   };
 };

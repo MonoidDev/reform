@@ -7,10 +7,7 @@ export interface ErrorMessageProps extends BaseAnyFormControlProps {
 }
 
 export const ErrorMessage: React.VFC<ErrorMessageProps> = (props) => {
-  const {
-    whenTouched = true,
-    control,
-  } = props;
+  const { whenTouched = true, control } = props;
 
   const result = useResult(control);
   const touched = useTouched(control);
@@ -21,8 +18,9 @@ export const ErrorMessage: React.VFC<ErrorMessageProps> = (props) => {
 
   return (
     <>
-      {result?._tag === 'left' && shouldDisplay ? (result?.left?.message ?? '') : null}
+      {result?._tag === 'left' && shouldDisplay
+        ? result?.left?.message ?? ''
+        : null}
     </>
   );
 };
-

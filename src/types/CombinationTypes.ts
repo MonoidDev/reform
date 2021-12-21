@@ -14,11 +14,11 @@ export interface TUnion<CS extends [AnyResolver, ...AnyResolver[]]>
 }
 
 export function union<CS extends [AnyResolver, ...AnyResolver[]]>(
-  cs: CS
+  cs: CS,
 ): TUnion<CS> {
   return {
     ...makeResolver<unknown, OutputOf<CS[number]>, ErrorMessage, 'union'>(
-      'union'
+      'union',
     ),
     resolve(input, contexts = [makeErrorContext()]) {
       const newErrorContexts: ErrorContext[] = [];

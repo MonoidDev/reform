@@ -1,7 +1,12 @@
 import { isLeft, makeLeft, makeRight } from './Either';
 import { ErrorMessage } from './ErrorMessage';
 import { InputOfResolverMap, OutputOfResolverMap, ResolverMap } from './infer';
-import { ErrorContext, makeErrorContext, makeResolver, Resolver } from './Resolver';
+import {
+  ErrorContext,
+  makeErrorContext,
+  makeResolver,
+  Resolver,
+} from './Resolver';
 import { isObject } from './utils';
 
 export interface TStruct<RM extends ResolverMap>
@@ -27,14 +32,14 @@ export function struct<RM extends ResolverMap>(props: RM): TStruct<RM> {
 
       let value: any = {};
 
-      const newErrorContexts: ErrorContext[] = []; 
+      const newErrorContexts: ErrorContext[] = [];
 
       for (const [key, resolver] of Object.entries(props)) {
         const nextContext: ErrorContext = {
           inputPath: [...contexts[contexts.length - 1].inputPath, key],
           resolverPath: [...contexts[contexts.length - 1].resolverPath, key],
           error: undefined,
-        }
+        };
         const result = resolver.resolve(input[key], [nextContext]);
 
         if (isLeft(result)) {
@@ -46,10 +51,7 @@ export function struct<RM extends ResolverMap>(props: RM): TStruct<RM> {
 
       if (newErrorContexts.length) {
         contexts.pop(); // Remove last context because there're no errors
-        return makeLeft([
-          ...contexts,
-          ...newErrorContexts,
-        ]);
+        return makeLeft([...contexts, ...newErrorContexts]);
       }
 
       return makeRight(value);

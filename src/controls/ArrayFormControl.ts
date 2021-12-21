@@ -1,6 +1,6 @@
-import { AnyFormControl, FormResult, Unsubscribe } from "./types";
+import { AnyFormControl, FormResult, Unsubscribe } from './types';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { isRight, makeLeft, makeRight } from "../types/Either";
+import { isRight, makeLeft, makeRight } from '../types/Either';
 
 export type ArrayInputOf<F extends AnyFormControl> = F['__input'][];
 
@@ -20,13 +20,13 @@ export class ArrayFormControl<F extends AnyFormControl> {
 
   unsubcribe: Unsubscribe;
 
-  constructor(
-    public initialControls: readonly F[],
-  ) {
+  constructor(public initialControls: readonly F[]) {
     this.controls = new BehaviorSubject<readonly F[]>([...initialControls]);
     this.input = new BehaviorSubject(this.getInput());
     this.output = new BehaviorSubject(this.getOutput());
-    this.result = new BehaviorSubject<FormResult<ArrayOutputOf<F>> | undefined>(this.getResult());
+    this.result = new BehaviorSubject<FormResult<ArrayOutputOf<F>> | undefined>(
+      this.getResult(),
+    );
     this.touched = new BehaviorSubject(this.getTouched());
 
     this.unsubcribe = this.startValidation();
@@ -37,15 +37,17 @@ export class ArrayFormControl<F extends AnyFormControl> {
   }
 
   getOutput(): ArrayOutputOf<F> | undefined {
-    if (this.getControls().find(c => c.getOutput() === undefined)) {
+    if (this.getControls().find((c) => c.getOutput() === undefined)) {
       return undefined;
     }
     return this.getControls().map((c) => c.getOutput());
   }
 
   getResult(): FormResult<ArrayOutputOf<F>> {
-    if (this.getControls().find(
-      c => c.getResult() === undefined || isRight(c.getResult()!))
+    if (
+      this.getControls().find(
+        (c) => c.getResult() === undefined || isRight(c.getResult()!),
+      )
     ) {
       return makeLeft({ message: '' });
     }
@@ -53,7 +55,9 @@ export class ArrayFormControl<F extends AnyFormControl> {
   }
 
   getTouched(): boolean {
-    return Object.values(this.getControls()).some((c: AnyFormControl) => c.getTouched());
+    return Object.values(this.getControls()).some((c: AnyFormControl) =>
+      c.getTouched(),
+    );
   }
 
   getControls() {
@@ -61,16 +65,18 @@ export class ArrayFormControl<F extends AnyFormControl> {
   }
 
   startValidation() {
-    const inputTask = combineLatest(this.getControls().map((c) => c.input))
-      .subscribe(() => {
-        this.input.next(this.getInput());
-      });
+    const inputTask = combineLatest(
+      this.getControls().map((c) => c.input),
+    ).subscribe(() => {
+      this.input.next(this.getInput());
+    });
 
-    const resultTask = combineLatest(this.getControls().map((c) => c.result))
-      .subscribe(() => {
-        this.result.next(this.getResult());
-        this.output.next(this.getOutput());
-      });
+    const resultTask = combineLatest(
+      this.getControls().map((c) => c.result),
+    ).subscribe(() => {
+      this.result.next(this.getResult());
+      this.output.next(this.getOutput());
+    });
 
     return () => {
       inputTask.unsubscribe();
@@ -113,5 +119,4 @@ export class ArrayFormControl<F extends AnyFormControl> {
       control.touchAll();
     }
   }
-
 }
