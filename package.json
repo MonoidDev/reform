@@ -15,7 +15,7 @@
   "module": "./dist/esm/index.mjs",
   "typesVersions": {
     ">=4.2": {
-      ".": [
+      "*": [
         "src/index.ts"
       ],
       "react": [
