@@ -13,7 +13,10 @@ export const numberField = (
   const { message } = options;
 
   const numberType = any().refine((input) => {
-    if (typeof input === 'string' && input.trim().length === 0) {
+    if (
+      (typeof input === 'string' && input.trim().length === 0) ||
+      input == null
+    ) {
       return makeRight(undefined);
     }
 

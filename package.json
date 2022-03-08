@@ -6,7 +6,7 @@
     "url": "https://github.com/MonoidDev/reform"
   },
   "private": false,
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.1",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
@@ -14,8 +14,8 @@
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",
   "typesVersions": {
-    "*": {
-      "*": [
+    ">=4.2": {
+      ".": [
         "src/index.ts"
       ],
       "react": [
@@ -42,11 +42,10 @@
     "node": ">=10"
   },
   "scripts": {
-    "postinstall": "husky install",
     "build": "node ./esbuild.js",
     "dev": "node ./esbuild.js --watch",
     "lint": "prettier --check src/",
-    "prepare": "yarn build",
+    "prepare": "husky install && yarn build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "test": "yarn jest"
