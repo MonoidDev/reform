@@ -1,9 +1,27 @@
-import { string } from '../types/BasicTypes';
+import { any } from '../types/BasicTypes';
 import { Either, makeLeft, makeRight } from '../types/Either';
 import { ErrorMessage } from '../types/ErrorMessage';
 
-export const stringField = () => {
-  const stringType = string<string>();
+export interface StringFieldOptions {
+  message: string;
+}
+
+export const stringField = (
+  options: StringFieldOptions = { message: 'Invalid value supplied to string' },
+) => {
+  const { message } = options;
+
+  const stringType = any().refine((input) => {
+    if (input == null) {
+      return makeRight('');
+    }
+
+    if (typeof input === 'string') {
+      return makeRight(input);
+    }
+
+    return makeLeft({ message });
+  });
 
   return {
     ...stringType,
