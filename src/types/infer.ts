@@ -1,9 +1,8 @@
-import { TAny } from './BasicTypes';
 import { Resolver } from './Resolver';
 
 export type AnyResolver = Resolver<any, any, any, string>;
 
-export type UnknownResolver = Resolver<unknown, unknown, unknown, string>;
+export type UnknownResolver = Resolver<unknown, unknown, any, string>;
 
 export type ResolverMap = {
   [K in string]: AnyResolver;
