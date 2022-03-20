@@ -2,7 +2,7 @@ import { makeLeft, makeRight } from './Either';
 import { ErrorMessage } from './ErrorMessage';
 import { makeResolver, Resolver } from './Resolver';
 
-export type LiteralValue = string | number | boolean;
+export type LiteralValue = string | number | boolean | null | undefined;
 
 export interface TLiteral<T extends LiteralValue>
   extends Resolver<unknown, T, ErrorMessage, 'literal'> {

@@ -17,3 +17,4 @@ export * from './react/factories';
 export * from './fields/stringField';
 export * from './fields/numberField';
 export * from './fields/booleanField';
+export * from './types/UtilityTypes';
