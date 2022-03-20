@@ -1,5 +1,8 @@
-import { AnyResolver, literal } from '..';
-import { union } from './CombinationTypes';
+import { AnyResolver } from './infer';
+import { TLiteral, literal } from './LiteralType';
 
-export const omittable = <R extends AnyResolver>(r: R) =>
-  union([r, literal(undefined)]);
+import { TUnion, union } from './CombinationTypes';
+
+export const omittable = <R extends AnyResolver>(
+  r: R,
+): TUnion<[R, TLiteral<undefined>]> => union([r, literal(undefined)]);
