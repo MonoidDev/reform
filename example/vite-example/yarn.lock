@@ -237,8 +237,9 @@
     to-fast-properties "^2.0.0"
 
 "@monoid-dev/reform@link:../..":
-  version "0.0.0"
-  uid ""
+  version "1.1.1"
+  dependencies:
+    rxjs "^7.4.0"
 
 "@rollup/pluginutils@^4.1.1":
   version "4.1.2"
@@ -681,9 +682,9 @@ tslib@~2.1.0:
   integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
 typescript@^4.4.4:
-  version "4.5.4"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-4.5.4.tgz#a17d3a0263bf5c8723b9c52f43c5084edf13c2e8"
-  integrity sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg==
+  version "4.7.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.7.4.tgz#1a88596d1cf47d59507a1bcdfb5b9dfe4d488235"
+  integrity sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ==
 
 vite@^2.7.2:
   version "2.7.3"
